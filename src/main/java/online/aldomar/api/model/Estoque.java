@@ -13,27 +13,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "operador")
+@Table(name = "estoque")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Operador {
+public class Estoque {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
-    private String nome;
-
     @ManyToOne
-    @JoinColumn(name = "funcao_id", nullable = false)
-    private Funcao funcao;
+    @JoinColumn(name = "produto_id", nullable = false)
+    private Produto produto;
 
-    @ManyToOne
-    @JoinColumn(name = "setor_id", nullable = false)
-    private Setor setor;
-
-    @Column(nullable = false)
-    private Boolean ativo;
+    @Column(name = "quantidade_atual", nullable = false)
+    private Integer quantidadeAtual = 0;
 }

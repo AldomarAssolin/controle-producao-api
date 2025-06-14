@@ -1,5 +1,7 @@
 package online.aldomar.api.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,27 +15,30 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "operador")
+@Table(name = "historico_producao")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Operador {
+public class HistoricoProducao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
-    private String nome;
+    @ManyToOne
+    @JoinColumn(name = "ordem_id", nullable = false)
+    private OrdemProducao ordem;
+
+    @Column(name = "status_anterior", nullable = false, length = 20)
+    private String statusAnterior;
+
+    @Column(name = "status_novo", nullable = false, length = 20)
+    private String statusNovo;
+
+    @Column(name = "data_alteracao", nullable = false)
+    private LocalDateTime dataAlteracao = LocalDateTime.now();
 
     @ManyToOne
-    @JoinColumn(name = "funcao_id", nullable = false)
-    private Funcao funcao;
-
-    @ManyToOne
-    @JoinColumn(name = "setor_id", nullable = false)
-    private Setor setor;
-
-    @Column(nullable = false)
-    private Boolean ativo;
+    @JoinColumn(name = "alterado_por")
+    private Operador alteradoPor;
 }

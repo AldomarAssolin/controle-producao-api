@@ -1,5 +1,7 @@
 package online.aldomar.api.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,27 +15,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "operador")
+@Table(name = "etiqueta_qr")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Operador {
+public class EtiquetaQr {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
-    private String nome;
+    @Column(nullable = false, unique = true, length = 100)
+    private String codigo;
 
     @ManyToOne
-    @JoinColumn(name = "funcao_id", nullable = false)
-    private Funcao funcao;
+    @JoinColumn(name = "ordem_id")
+    private OrdemProducao ordem;
 
     @ManyToOne
-    @JoinColumn(name = "setor_id", nullable = false)
-    private Setor setor;
+    @JoinColumn(name = "produto_id")
+    private Produto produto;
 
-    @Column(nullable = false)
-    private Boolean ativo;
+    @Column(name = "data_criacao", nullable = false)
+    private LocalDateTime dataCriacao = LocalDateTime.now();
 }
