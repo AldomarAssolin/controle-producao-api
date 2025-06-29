@@ -1,16 +1,16 @@
 // OrdemProducaoService
 package online.aldomar.api.service;
 
-import online.aldomar.api.model.OrdemProducao;
-import online.aldomar.api.repository.OrdemProducaoRepository;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.transaction.Transactional;
-
-import org.springframework.http.HttpStatus;
 import lombok.RequiredArgsConstructor;
-import java.util.List;
+import online.aldomar.api.model.OrdemProducao;
+import online.aldomar.api.repository.OrdemProducaoRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -30,11 +30,7 @@ public class OrdemProducaoService {
 
     @Transactional
     public OrdemProducao create(OrdemProducao dados) {
-        // 1) salva a ordem
-        var op = repository.save(dados);
-        // 2) registra o histórico de criação
-        historicoService.create(op, null, op.getStatus(), /* quem alterou? */ null);
-        return op;
+        return repository.save(dados);
     }
 
     @Transactional
